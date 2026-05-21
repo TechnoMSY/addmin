@@ -18,6 +18,11 @@ $avatar_src = "https://ui-avatars.com/api/?name=" . urlencode($_SESSION['user'][
 if (!empty($_SESSION['user']['foto']) && file_exists("uploads/profile/" . $_SESSION['user']['foto'])) {
     $avatar_src = "uploads/profile/" . $_SESSION['user']['foto'];
 }
+
+
+$nama_user = $_SESSION['user']['nama'] ?? $_SESSION['user']['username'] ?? 'Pengguna';
+$role_user = $_SESSION['user']['role'] ?? 'Siswa';
+
 ?>
 <!DOCTYPE html>
 <html class="light" lang="en">
@@ -148,7 +153,9 @@ if (!empty($_SESSION['user']['foto']) && file_exists("uploads/profile/" . $_SESS
 </head>
 
 <body class="bg-background text-on-background min-h-screen">
-    
+
+
+
     <div id="loading-overlay" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[9999] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
         <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-2xl flex flex-col items-center gap-4">
             <div class="w-12 h-12 border-4 border-slate-700 border-t-emerald-500 rounded-full animate-spin"></div>
@@ -156,45 +163,46 @@ if (!empty($_SESSION['user']['foto']) && file_exists("uploads/profile/" . $_SESS
         </div>
     </div>
 
-    <aside class="bg-slate-900 h-screen w-64 fixed left-0 top-0 flex flex-col py-xl px-md shadow-xl border-r border-slate-800 z-50">
+    <aside class="bg-white h-screen w-64 fixed left-0 top-0 flex flex-col py-xl px-md shadow-sm border-r border-gray-200 z-50">
         <div class="flex items-center gap-3 px-4 mb-xxl">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                <span class="material-symbols-outlined text-slate-950 font-bold" style="font-variation-settings: 'FILL' 1;">science</span>
+            
+            <div class="w-10 h-10 flex items-center justify-center">
+                <img src="images/logo.png" alt="Logo Lab" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Lab&background=059669&color=fff';">
             </div>
             <div class="flex flex-col">
-                <span class="font-headline-md text-headline-md font-bold text-slate-100 tracking-tight">Lab MAKN</span>
-                <span class="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Precision Systems</span>
+                <span class="font-headline-md text-headline-md font-bold text-gray-900 tracking-tight">Lab MAKN</span>
+                <span class="text-gray-400 text-[10px] uppercase tracking-widest font-bold">Inventori Lab Komputer</span>
             </div>
         </div>
 
         <nav class="flex-1 space-y-1.5">
-            <a class="nav-link <?php echo (!isset($_GET['page']) || $_GET['page'] === 'home') ? 'bg-emerald-500/10 text-emerald-400 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=home">
+            <a class="nav-link <?php echo (!isset($_GET['page']) || $_GET['page'] === 'home') ? 'bg-emerald-50 text-emerald-600 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=home">
                 <span class="material-symbols-outlined">dashboard</span>
                 <span class="font-body-md text-body-md">Dashboard</span>
             </a>
-            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'barang') ? 'bg-emerald-500/10 text-emerald-400 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=barang">
+            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'barang') ? 'bg-emerald-50 text-emerald-600 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=barang">
                 <span class="material-symbols-outlined">inventory_2</span>
                 <span class="font-body-md text-body-md">Barang</span>
             </a>
-            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'peminjaman') ? 'bg-emerald-500/10 text-emerald-400 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=peminjaman">
+            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'peminjaman') ? 'bg-emerald-50 text-emerald-600 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=peminjaman">
                 <span class="material-symbols-outlined">swap_horiz</span>
                 <span class="font-body-md text-body-md">Peminjaman</span>
             </a>
-            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'kategori') ? 'bg-emerald-500/10 text-emerald-400 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=kategori">
+            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'kategori') ? 'bg-emerald-50 text-emerald-600 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=kategori">
                 <span class="material-symbols-outlined">category</span>
                 <span class="font-body-md text-body-md">Kategori</span>
             </a>
-            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'pengaturan') ? 'bg-emerald-500/10 text-emerald-400 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=pengaturan">
+            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'pengaturan') ? 'bg-emerald-50 text-emerald-600 font-semibold border-l-4 border-emerald-500 pl-3' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 pl-4'; ?> rounded-r-lg py-3 flex items-center gap-3 transition-all duration-200" href="index.php?page=pengaturan">
                 <span class="material-symbols-outlined">settings</span>
                 <span class="font-body-md text-body-md">Pengaturan</span>
             </a>
         </nav>
 
-        <div class="mt-auto border-t border-slate-800 pt-lg space-y-1">
-            <a href="index.php?page=barang" class="w-full text-center block bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-lg px-4 py-3 shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 active:scale-[0.98] transition-all duration-150">
+        <div class="mt-auto border-t border-gray-200 pt-lg space-y-1">
+            <a href="index.php?page=barang" class="w-full text-center block bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-lg px-4 py-3 shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 active:scale-[0.98] transition-all duration-150">
                 New Entry
             </a>
-            <a href="logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar dari sistem?');" class="flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-all duration-200">
+            <a href="logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar dari sistem?');" class="flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200">
                 <span class="material-symbols-outlined text-[20px]">logout</span>
                 <span class="font-medium">Log Out</span>
             </a>
@@ -214,7 +222,7 @@ if (!empty($_SESSION['user']['foto']) && file_exists("uploads/profile/" . $_SESS
                 <button id="btn-dropdown-profil" class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-surface-container transition-all group focus:outline-none">
                     <div class="text-right hidden sm:block">
                         <p class="font-label-md text-label-md text-primary font-semibold group-hover:text-secondary transition-colors"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></p>
-                        <p class="text-[10px] text-on-surface-variant uppercase tracking-wider"><?php echo htmlspecialchars($_SESSION['user']['role'] ?? 'User'); ?></p>
+                        <p class="text-[10px] text-on-surface-variant uppercase tracking-wider"><?php echo $_SESSION['user']['level']; ?></p>
                     </div>
                     <img id="header-avatar" alt="Profile" class="w-10 h-10 rounded-full border border-outline-variant object-cover group-hover:border-secondary transition-all" src="<?php echo $avatar_src; ?>" />
                     <span class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-secondary transition-transform duration-200" id="icon-chevron-profil">expand_more</span>
@@ -247,19 +255,28 @@ if (!empty($_SESSION['user']['foto']) && file_exists("uploads/profile/" . $_SESS
 
         <div id="main-content-canvas" class="container-fluid flex-1">          
             <?php
-            $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-            if($page === 'home') : 
-                $user_role = isset($_SESSION['user']['role']) ? $_SESSION['user']['role'] : 'user';
-            ?>
+                            $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+                            if($page === 'home') : ?>
                 <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-16 pt-4 px-xl max-w-container-max mx-auto w-full">
-                   <div class="welcome-box">
+                   <div class="welcome-box relative overflow-hidden">
                         <h1 class="font-headline-lg md:text-3xl font-bold">
-                            Selamat Datang, <span class="nama-user text-yellow-300"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></span> 👋
+                            Selamat Datang, <span class="nama-user text-yellow-300"><?= htmlspecialchars($nama_user); ?></span> 👋
                         </h1>
                         <h4 class="text-sm md:text-base font-semibold opacity-95 mt-2 flex items-center gap-2">
-                            Sebagai: <span class="bg-white/20 px-2 py-0.5 rounded text-xs lowercase font-bold tracking-wide border border-white/10 text-yellow-200"><?php echo htmlspecialchars($user_role); ?></span>
+                            Sebagai: <span class="bg-white/20 px-2 py-0.5 rounded text-xs lowercase font-bold tracking-wide border border-white/10 text-yellow-200"><?php echo $_SESSION['user']['level']; ?></span>
                         </h4>
-                        <p class="sub-text mt-3 text-sm opacity-85 leading-relaxed">
+                        
+                        <div class="mt-4 p-3 bg-black/30 rounded-xl border border-white/5 backdrop-blur-sm max-w-md flex items-center gap-4 text-white">
+                            <div class="flex items-center justify-center w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-lg">
+                                <span class="material-symbols-outlined text-2xl animate-pulse">schedule</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span id="realtime-clock" class="text-xl font-bold font-mono tracking-wider text-emerald-400">00:00:00</span>
+                                <span id="realtime-date" class="text-xs text-slate-300 font-medium">Memuat tanggal...</span>
+                            </div>
+                        </div>
+
+                        <p class="sub-text mt-4 text-sm opacity-85 leading-relaxed">
                             Semoga harimu menyenangkan dan siap melakukan kontrol serta manajemen aktivitas ekosistem laboratorium hari ini.
                         </p>
                     </div>
@@ -289,12 +306,43 @@ if (!empty($_SESSION['user']['foto']) && file_exists("uploads/profile/" . $_SESS
     </main>
 
     <script>
+        function startRealtimeWidget() {
+            const clockEl = document.getElementById('realtime-clock');
+            const dateEl = document.getElementById('realtime-date');
+            
+            if (!clockEl || !dateEl) return;
+
+            const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const namaBulan = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+
+            function updateTime() {
+                const sekarang = new Date();
+                const jam = String(sekarang.getHours()).padStart(2, '0');
+                const menit = String(sekarang.getMinutes()).padStart(2, '0');
+                const detik = String(sekarang.getSeconds()).padStart(2, '0');
+                clockEl.textContent = `${jam}:${menit}:${detik}`;
+
+                const hari = namaHari[sekarang.getDay()];
+                const tanggal = sekarang.getDate();
+                const bulan = namaBulan[sekarang.getMonth()];
+                const tahun = sekarang.getFullYear();
+                dateEl.textContent = `${hari}, ${tanggal} ${bulan} ${tahun}`;
+            }
+
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
+            startRealtimeWidget();
+
             const canvas = document.getElementById("main-content-canvas");
             const loadingOverlay = document.getElementById("loading-overlay");
             const navLinks = document.querySelectorAll(".nav-link");
 
-            // LOGIKA CONTROL DROP-DOWN PROFIL
             const btnProfil = document.getElementById("btn-dropdown-profil");
             const menuProfil = document.getElementById("dropdown-menu-profil");
             const chevronProfil = document.getElementById("icon-chevron-profil");
@@ -331,7 +379,6 @@ if (!empty($_SESSION['user']['foto']) && file_exists("uploads/profile/" . $_SESS
                 if (chevronProfil) chevronProfil.style.transform = "rotate(0deg)";
             }
 
-            // ANIMASI DIMENSI PRE-LOADER CANVAS Halaman
             setTimeout(() => {
                 canvas.classList.add("page-loaded");
             }, 50);
