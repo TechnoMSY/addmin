@@ -13,6 +13,19 @@ if (!isset($_SESSION["user"])) {
 $nama_user = $_SESSION['user']['nama'] ?? $_SESSION['user']['username'] ?? 'Pengguna';
 $role_user = $_SESSION['user']['role'] ?? $_SESSION['user']['level'] ?? 'Siswa';
 $currentPage = $_GET['page'] ?? 'home';
+
+
+$master_menus = [
+    'kategori' => ['label' => 'Kategori Perangkat', 'icon' => 'category'],
+    'barang' => ['label' => 'Stok Perangkat Lab', 'icon' => 'devices'],
+    'siswa' => ['label' => 'Data Siswa', 'icon' => 'group'],
+    'lab_komputer' => ['label' => 'Lab Komputer', 'icon' => 'door_open']
+];
+
+
+$allowedPages = ['home', 'peminjaman', 'kategori', 'barang', 'siswa', 'lab_komputer'];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -178,7 +191,8 @@ $currentPage = $_GET['page'] ?? 'home';
                 </div>
                 <div>
                     <h1 class="text-xs font-black text-slate-900 tracking-wide uppercase">LAB MAKN</h1>
-                    <p class="text-[9px] text-slate-400 font-bold tracking-wider uppercase mt-0.5">Sistem Lab Komputer</p>
+                    <p class="text-[9px] text-slate-400 font-bold tracking-wider uppercase mt-0.5">Ivetoris Lab Komputer
+                    </p>
                 </div>
             </div>
 
@@ -217,13 +231,17 @@ $currentPage = $_GET['page'] ?? 'home';
 
                 <?php if (strtolower($role_user) === 'admin' || strtolower($role_user) === 'guru'): ?>
                     <div>
-                        <span class="px-3 text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Master
-                            Kelola</span>
+                        <span
+                            class="px-3 text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Pengelolaan
+                            Sistem</span>
                         <nav class="space-y-1">
                             <?php
+                            // Menambahkan menu lab_komputer ke dalam daftar pengelolaan sistem
                             $master_menus = [
                                 'kategori' => ['label' => 'Kategori Perangkat', 'icon' => 'category'],
-                                'barang' => ['label' => 'Stok Perangkat Lab', 'icon' => 'devices']
+                                'barang' => ['label' => 'Stok Perangkat Lab', 'icon' => 'devices'],
+                                'siswa' => ['label' => 'Data Siswa', 'icon' => 'group'],
+                                'lab_komputer' => ['label' => 'Lab Komputer', 'icon' => 'door_open'] // Tambahan menu Lab Komputer
                             ];
 
                             foreach ($master_menus as $key => $menu):
@@ -247,16 +265,17 @@ $currentPage = $_GET['page'] ?? 'home';
                     </div>
                 <?php endif; ?>
             </div>
-        </div>
 
-        <div class="pt-4 border-t border-slate-100 space-y-3">
-            <a href="logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar?');"
-                class="w-full bg-[#EF4444] hover:bg-red-600 text-white text-xs font-bold rounded-xl py-2.5 flex items-center justify-center gap-2 transition-colors shadow-sm uppercase tracking-wider">
-                <span class="material-symbols-outlined text-base">logout</span>
-                Keluar Sistem
-            </a>
-            <p class="text-center text-[9px] text-slate-400 font-medium">SIM V1.0.0 © 2026</p>
-        </div>
+
+
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <a href="logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar?');"
+                    class="w-full bg-[#EF4444] hover:bg-red-600 text-white text-xs font-bold rounded-xl py-2.5 flex items-center justify-center gap-2 transition-colors shadow-sm uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-base">logout</span>
+                    Keluar Sistem
+                </a>
+                <p class="text-center text-[9px] text-slate-400 font-medium">MAKN Ende V1.3.0 © 2026</p>
+            </div>
     </aside>
 
     <main class="pr-64 min-h-screen flex flex-col">
@@ -278,8 +297,9 @@ $currentPage = $_GET['page'] ?? 'home';
 
         <section class="flex-1 p-8 bg-slate-50/50">
             <?php
-            $allowedPages = ['home', 'peminjaman', 'kategori', 'barang'];
-            
+
+            $allowedPages = ['home', 'peminjaman', 'kategori', 'barang', 'siswa', 'lab_komputer'];
+
             if (in_array($currentPage, $allowedPages)) {
                 $targetFile = $currentPage . '.php';
                 if (file_exists($targetFile)) {

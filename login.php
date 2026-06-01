@@ -96,8 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Gerbang Masuk | Lab MAKN</title>
+    <title> Login | Lab MAKN Ende</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link rel="icon" href="images/image.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -115,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <img src="images/image.png" alt="Logo" class="w-full h-full object-contain" onerror="this.parentNode.innerHTML='<div class=\'w-full h-full bg-blue-600 text-white font-extrabold text-lg flex items-center justify-center\'>L</div>';">
             </div>
             <h1 class="text-lg font-black text-slate-900 tracking-tight uppercase">Lab MAKN Ende</h1>
-            <p class="text-xs font-medium text-slate-400 mt-1">Sistem Lab Komputer</p>
+            <p class="text-xs font-medium text-slate-400 mt-1">Iventoris Lab Komputer</p>
         </div>
 
         <div class="grid grid-cols-2 bg-slate-100 p-1.5 rounded-2xl mb-6">

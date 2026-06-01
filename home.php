@@ -23,6 +23,9 @@ $total_kategori = mysqli_fetch_assoc($total_kategori_query)['total'] ?? 0;
 $sedang_dipinjam_query = mysqli_query($koneksi, "SELECT SUM(jumlah_pinjam) as total FROM peminjaman WHERE status_peminjaman='disetujui' AND status IN ('dipinjam', 'terlambat')");
 $sedang_dipinjam = mysqli_fetch_assoc($sedang_dipinjam_query)['total'] ?? 0;
 
+$total_lab_query = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM lab_komputer");
+$total_lab = mysqli_fetch_assoc($total_lab_query)['total'] ?? 0;
+
 // LOGIKA HITUNG PERSENTASE KESEHATAN BARANG
 $persen_kesehatan = 0;
 if ($total_barang > 0) {
@@ -113,6 +116,19 @@ if ($total_barang > 0) {
             <div class="w-7 h-7 bg-red-50 text-red-500 rounded-lg flex items-center justify-center">
                 <span class="material-symbols-outlined text-base">report</span>
             </div>
+        </div>
+    </div>
+
+    <div
+        class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center gap-4 flex-1 min-w-[200px]">
+        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-2xl">door_open</span>
+        </div>
+        <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Fasilitas Ruang</span>
+            <h3 class="text-xl font-black text-slate-900 mt-0.5"><?= $total_lab; ?> <span
+                    class="text-xs font-medium text-slate-400">Lab</span></h3>
+            <p class="text-[11px] font-medium text-slate-400 mt-1">Sektor laboratorium aktif</p>
         </div>
     </div>
 
@@ -210,19 +226,7 @@ if ($total_barang > 0) {
             </div>
         </div>
 
-        <div
-            class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex flex-col justify-between flex-1 gap-4">
-            <div>
-                <span class="text-[9px] font-bold uppercase text-brand-blue tracking-wider">Agenda Terdekat</span>
-                <h4 class="text-sm font-bold text-text-dark mt-1">Audit Lab Mendatang</h4>
-                <p class="text-xs text-text-muted mt-1 leading-relaxed">Pemeriksaan dan keselarasan unit PC Lab
-                    Utama dijadwalkan pada hari Jumat ini.</p>
-            </div>
-            <button
-                class="w-full bg-slate-50 border border-slate-200 hover:bg-slate-100 text-text-dark text-xs font-bold py-2 rounded-xl transition-all uppercase tracking-wide">
-                Siapkan Dokumentasi
-            </button>
-        </div>
+
     </div>
 
 </div>
